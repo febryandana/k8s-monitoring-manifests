@@ -52,12 +52,12 @@ spec:
           image: prom/prometheus
           imagePullPolicy: IfNotPresent
           resources:
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-          requests: 
-            memory: 500M
-            cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+            requests: 
+              memory: 500M
+              cpu: "500m"
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
