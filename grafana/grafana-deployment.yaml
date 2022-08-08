@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-pv
+spec:
+  storageClassName: slow
+  capacity:
+    storage: 5
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: grafana-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pv-claim
+spec:
+  storageClassName: slow
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: monitoring-manifestfile
+  labels:
+    app: grafana-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-server
+  template:
+    metadata:
+      labels:
+        app: grafana-server
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:9.0.5
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: grafana
+          containerPort: 3000
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+          requests: 
+            memory: 500M
+            cpu: "500m"
+        volumeMounts:
+          - mountPath: /var/lib/grafana
+            name: grafana-storage
+          - mountPath: /etc/grafana/provisioning/datasources
+            name: grafana-datasources
+            readOnly: false
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+              claimName: grafana-pv-claim
+        - name: grafana-datasources
+          configMap:
+              defaultMode: 420
+              name: grafana-datasources
