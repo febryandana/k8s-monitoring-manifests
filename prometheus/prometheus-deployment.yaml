@@ -7,7 +7,7 @@ metadata:
 spec:
   storageClassName: slow
   capacity:
-    storage: 10
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -26,6 +26,9 @@ spec:
   volumeName: prom-pv
   accessModes:
     - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -73,4 +76,4 @@ spec:
             name: prometheus-server-conf
         - name: prometheus-storage-volume
           persistentVolumeClaim:
-              claimName: prom-pv-claim
+            claimName: prom-pv-claim
