@@ -48,6 +48,10 @@ spec:
         app: grafana-server
     spec:
       nodeName: node1
+      securityContext:
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
       containers:
       - name: grafana
         image: grafana/grafana:9.0.5
