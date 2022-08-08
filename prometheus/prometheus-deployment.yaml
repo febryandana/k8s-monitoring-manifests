@@ -73,5 +73,6 @@ spec:
             defaultMode: 420
             name: prometheus-server-conf
         - name: prometheus-storage-volume
-          persistentVolumeClaim:
-            claimName: prom-pv-claim
+          # persistentVolumeClaim:
+          #   claimName: prom-pv-claim
+          emptyDir: {}
