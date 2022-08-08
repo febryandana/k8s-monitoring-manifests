@@ -23,11 +23,9 @@ metadata:
   namespace: monitoring-manifestfile
 spec:
   storageClassName: slow
+  volumeName: grafana-pv
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
