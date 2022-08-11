@@ -2,7 +2,11 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: alertmanager-config
-  namespace: monitoring-manifestfile
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: alertmanager
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: 0.24.0
 data:
   config.yml: |-
     global:
@@ -24,12 +28,12 @@ data:
     receivers:
     - name: alert-emailer
       email_configs:
-      - to: demo@devopscube.com
+      - to: foo@bar
         send_resolved: false
         from: from-email@email.com
-        smarthost: smtp.eample.com:25
+        smarthost: smtp.sample.com:25
         require_tls: false
     - name: slack_demo
       slack_configs:
-      - api_url: https://hooks.slack.com/services/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sz4Qk
-        channel: '#devopscube-demo'
+      - api_url: https://hooks.slack.com/services/123/abcde
+        channel: '#alertmanager-demo'

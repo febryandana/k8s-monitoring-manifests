@@ -2,11 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus
-  namespace: monitoring-manifestfile
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/version: v2.37.0
 spec:
   ingressClassName: nginx
   rules:
-  - host: prometheus.cx.local
+  - host: prometheus.local
     http:
       paths:
       - path: /

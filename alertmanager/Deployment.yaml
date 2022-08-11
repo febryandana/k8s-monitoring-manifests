@@ -2,7 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: alertmanager
-  namespace: monitoring-manifestfile
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: alertmanager
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: 0.24.0
 spec:
   replicas: 1
   selector:
@@ -16,7 +20,7 @@ spec:
     spec:
       containers:
       - name: alertmanager
-        image: prom/alertmanager:latest
+        image: prom/alertmanager:0.24.0
         imagePullPolicy: IfNotPresent
         args:
           - "--config.file=/etc/alertmanager/config.yml"

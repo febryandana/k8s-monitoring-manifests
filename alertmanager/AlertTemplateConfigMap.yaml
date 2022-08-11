@@ -3,7 +3,11 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: alertmanager-templates
-  namespace: monitoring-manifestfile
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: alertmanager
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: 0.24.0
 data:
   default.tmpl: |
     {{ define "__alertmanager" }}AlertManager{{ end }}

@@ -4,7 +4,9 @@ metadata:
   name: prometheus-server-conf
   labels:
     name: prometheus-server-conf
-  namespace: monitoring-manifestfile
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/version: v2.37.0
+  namespace: monitoring
 data:
   prometheus.rules: |-
     groups:
@@ -28,7 +30,7 @@ data:
       - scheme: http
         static_configs:
         - targets:
-          - "alertmanager.monitoring-manifestfile.svc:9093"
+          - "alertmanager.monitoring.svc:9093"
 
     scrape_configs:
       - job_name: 'node-exporter'
@@ -104,7 +106,7 @@ data:
       
       - job_name: 'kube-state-metrics'
         static_configs:
-          - targets: ['kube-state-metrics.monitoring-manifestfile.svc:8080']
+          - targets: ['kube-state-metrics.monitoring.svc:8080']
 
       - job_name: 'kubernetes-cadvisor'
 
@@ -157,8 +159,3 @@ data:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
-            
-        
-      - job_name: 'devopscube Ubuntu server metrics'
-        static_configs:
-          - targets: ['ubuntu.tehd.ir:9100']
